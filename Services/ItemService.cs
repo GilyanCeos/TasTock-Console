@@ -121,9 +121,9 @@ namespace TasTock.Services
                  switch (opcao)
                 {
                     case "1":
-                        //Console.Write("Digite o nome ou parte: ");
-                        //string termo = Console.ReadLine() ?? "";
-                        resultado = itens.Where(i => i.Nome.Contains(//termo, StringComparison.OrdinalIgnoreCase));
+                        Console.Write("Digite o nome do produto, ou todos para lista completa: ");
+                        string termo = Console.ReadLine() ?? "";
+                        resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
                         break;
 
                     case "2":
