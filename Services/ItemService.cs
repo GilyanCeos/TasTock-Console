@@ -123,7 +123,7 @@ namespace TasTock.Services
                     case "1":
                         //Console.Write("Digite o nome ou parte: ");
                         //string termo = Console.ReadLine() ?? "";
-                        resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
+                        resultado = itens.Where(i => i.Nome.Contains(//termo, StringComparison.OrdinalIgnoreCase));
                         break;
 
                     case "2":
