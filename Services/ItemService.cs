@@ -93,12 +93,12 @@ namespace TasTock.Services
             {
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
                 Console.WriteLine($"Itens cadastrados: {itens.Count}");
-                Console.WriteLine("\n--- RESULTADO ---\n");
                 foreach (var item in itens)
                     {
                         Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
                     }
-                Console.WriteLine($"Total acumulado (valor x quantidade): R$ {total:F2}");
+                Console.WriteLine("\nTotal acumulado (valor x quantidade):\n");
+                Console.WriteLine($"R$ {total:F2}");
             }
             Console.ReadKey();
         }
