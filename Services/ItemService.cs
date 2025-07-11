@@ -96,9 +96,9 @@ namespace TasTock.Services
                 Console.WriteLine($"Total acumulado (valor x quantidade): R$ {total:F2}");
             }
                 Console.WriteLine("\n--- RESULTADO ---\n");
-                foreach (var item )
+                foreach (var item in itens)
                     {
-                        Console.WriteLine($"ID: {item.Id} | {item.Nome} | R$ {item.PrecoUnitario:F2} | {item.Quantidade} un.");
+                        Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
                     }
             Console.ReadKey();
         }
