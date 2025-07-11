@@ -91,11 +91,8 @@ namespace TasTock.Services
             }
             else
             {
-                Console.Write("Digite o nome, ou tecle Enter para lista completa: ");
-                string termo = Console.ReadLine() ?? "";
-
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
-                Console.WriteLine($"Itens cadastrados: {itens.Count}");
+                Console.WriteLine($"Itens cadastrados: {itens, itens.Count}");
                 Console.WriteLine($"Total acumulado (valor x quantidade): R$ {total:F2}");
             }
 
