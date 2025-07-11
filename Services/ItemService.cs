@@ -100,81 +100,83 @@ namespace TasTock.Services
         }
 
         public void Listar()
-{
-    while (true)
-    {
-        Console.Clear();
-        Console.WriteLine("==== ITENS CADASTRADOS ====\n");
+         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("==== ITENS CADASTRADOS ====\n");
 
-        Console.WriteLine("[1] Listar por nome");
-        Console.WriteLine("[2] Listar por faixa de preço");
-        Console.WriteLine("[3] Ordenar por data de cadastro");
-        Console.WriteLine("[4] Exportar para CSV");
-        Console.WriteLine("[0] Voltar");
+                Console.WriteLine("[1] Listar por nome");
+                Console.WriteLine("[2] Listar por faixa de preço");
+                Console.WriteLine("[3] Ordenar por data de cadastro");
+                Console.WriteLine("[4] Exportar para CSV");
+                Console.WriteLine("[0] Voltar");
 
-        Console.Write("\nEscolha uma opção: ");
-        string opcao = Console.ReadLine() ?? "";
+                Console.Write("\nEscolha uma opção: ");
+                string opcao = Console.ReadLine() ?? "";
 
-        var itens = _repo.Listar();
-        IEnumerable<Item> resultado = itens;
+                 var itens = _repo.Listar();
+                 IEnumerable<Item> resultado = itens;
 
-        switch (opcao)
+                 switch (opcao)
+                {
+                    case "1":
+                        //Console.Write("Digite o nome ou parte: ");
+                        //string termo = Console.ReadLine() ?? "";
+                        resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
+                        break;
+
+                    case "2":
+                        Console.Write("Preço mínimo: ");
+                        decimal.TryParse(Console.ReadLine(), out decimal min);
+                        Console.Write("Preço máximo: ");
+                        decimal.TryParse(Console.ReadLine(), out decimal max);
+                        resultado = itens.Where(i => i.PrecoUnitario >= min && i.PrecoUnitario <= max);
+                        break;
+
+                    case "3":
+                        resultado = itens.OrderBy(i => i.CadastradoEm);
+                        break;
+
+                    case "4":
+                        ExportarCsv(itens);
+                        return;
+
+                    case "0":
+                        return;
+
+                    default:
+                        Console.WriteLine("Opção inválida.");
+                        Console.ReadKey();
+                        continue;
+                }
+
+                        Console.WriteLine("\n--- RESULTADO ---\n");
+                        foreach (var item in resultado)
+                        {
+                            Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
+                        }
+
+                        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
+                        Console.ReadKey();
+                    }
+                }
+
+        private void ExportarCsv(IEnumerable<Item> itens)
         {
-            case "1":
-                Console.Write("Digite o nome ou parte: ");
-                string termo = Console.ReadLine() ?? "";
-                resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
-                break;
+            var path = "exportacao_tastock.csv";
 
-            case "2":
-                Console.Write("Preço mínimo: ");
-                decimal.TryParse(Console.ReadLine(), out decimal min);
-                Console.Write("Preço máximo: ");
-                decimal.TryParse(Console.ReadLine(), out decimal max);
-                resultado = itens.Where(i => i.PrecoUnitario >= min && i.PrecoUnitario <= max);
-                break;
+            using (var writer = new StreamWriter(path))
+            {
+                writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
+                foreach (var item in itens)
+                {
+                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
+                }
+            }
 
-            case "3":
-                resultado = itens.OrderBy(i => i.CadastradoEm);
-                break;
-
-            case "4":
-                ExportarCsv(itens);
-                return;
-
-            case "0":
-                return;
-
-            default:
-                Console.WriteLine("Opção inválida.");
-                Console.ReadKey();
-                continue;
+            Console.WriteLine($"\nExportação concluída: {path}");
+            Console.ReadKey();
         }
-
-        Console.WriteLine("\n--- RESULTADO ---\n");
-        foreach (var item in resultado)
-        {
-            Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
-        }
-
-        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
-        Console.ReadKey();
     }
-}
-
-private void ExportarCsv(IEnumerable<Item> itens)
-{
-    var path = "exportacao_tastock.csv";
-
-    using (var writer = new StreamWriter(path))
-    {
-        writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
-        foreach (var item in itens)
-        {
-            writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
-        }
-    }
-
-    Console.WriteLine($"\nExportação concluída: {path}");
-    Console.ReadKey();
 }

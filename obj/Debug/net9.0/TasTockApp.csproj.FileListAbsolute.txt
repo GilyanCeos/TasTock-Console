@@ -1,0 +1,112 @@
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.csproj.AssemblyReference.cache
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.AssemblyInfoInputs.cache
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.AssemblyInfo.cs
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.csproj.CoreCompileInputs.cache
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.sourcelink.json
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/TasTockApp.exe
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/TasTockApp.deps.json
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/TasTockApp.runtimeconfig.json
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/TasTockApp.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/TasTockApp.pdb
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Data.Sqlite.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Sqlite.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/SQLitePCLRaw.batteries_v2.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/SQLitePCLRaw.core.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/SQLitePCLRaw.provider.e_sqlite3.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/browser-wasm/nativeassets/net8.0/e_sqlite3.a
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-arm/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-arm64/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-armel/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-mips64/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-musl-arm/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-musl-arm64/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-musl-s390x/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-ppc64le/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-s390x/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-x64/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/linux-x86/native/libe_sqlite3.so
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/maccatalyst-x64/native/libe_sqlite3.dylib
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/osx-arm64/native/libe_sqlite3.dylib
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/osx-x64/native/libe_sqlite3.dylib
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/win-arm/native/e_sqlite3.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/win-arm64/native/e_sqlite3.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/win-x64/native/e_sqlite3.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/bin/Debug/net9.0/runtimes/win-x86/native/e_sqlite3.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.csproj.Up2Date
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/refint/TasTockApp.dll
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.pdb
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/TasTockApp.genruntimeconfig.cache
+C:/Users/Os Santos/Documents/DIO/TasTock/obj/Debug/net9.0/ref/TasTockApp.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/TasTockApp
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/TasTockApp.deps.json
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/TasTockApp.runtimeconfig.json
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/TasTockApp.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/TasTockApp.pdb
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Data.Sqlite.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Sqlite.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/SQLitePCLRaw.batteries_v2.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/SQLitePCLRaw.core.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/SQLitePCLRaw.provider.e_sqlite3.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/browser-wasm/nativeassets/net8.0/e_sqlite3.a
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-arm/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-arm64/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-armel/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-mips64/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-musl-arm/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-musl-arm64/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-musl-s390x/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-musl-x64/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-ppc64le/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-s390x/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-x64/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/linux-x86/native/libe_sqlite3.so
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/maccatalyst-x64/native/libe_sqlite3.dylib
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/osx-arm64/native/libe_sqlite3.dylib
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/osx-x64/native/libe_sqlite3.dylib
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/win-arm/native/e_sqlite3.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/win-arm64/native/e_sqlite3.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/win-x64/native/e_sqlite3.dll
+/home/gilyan/Dev.Projetos/TasTock/bin/Debug/net9.0/runtimes/win-x86/native/e_sqlite3.dll
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.csproj.AssemblyReference.cache
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.GeneratedMSBuildEditorConfig.editorconfig
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.AssemblyInfoInputs.cache
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.AssemblyInfo.cs
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.csproj.CoreCompileInputs.cache
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.sourcelink.json
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.csproj.Up2Date
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.dll
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/refint/TasTockApp.dll
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.pdb
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/TasTockApp.genruntimeconfig.cache
+/home/gilyan/Dev.Projetos/TasTock/obj/Debug/net9.0/ref/TasTockApp.dll
