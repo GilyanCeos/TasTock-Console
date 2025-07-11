@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TasTockApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8996b9f0492b72d2f846531b52e2869c8577f23b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+409b1d6b9040a34267249e25d5521065cec313bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("TasTockApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TasTockApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

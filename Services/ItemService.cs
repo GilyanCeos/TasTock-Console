@@ -89,10 +89,10 @@ namespace TasTock.Services
             {
                 Console.WriteLine("Nenhum item cadastrado.");
             }
-            else
+            else (itens.Where())
             {
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
-                Console.WriteLine($"Itens cadastrados: {itens, itens.Count}");
+                Console.WriteLine($"Itens cadastrados: {itens.Count}");
                 Console.WriteLine($"Total acumulado (valor x quantidade): R$ {total:F2}");
             }
 
