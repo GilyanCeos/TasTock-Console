@@ -91,7 +91,7 @@ namespace TasTock.Services
             }
             else
             {
-                decimal total = itens.Where(i => i.PrecoUnitario * i.Quantidade);
+                decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
                 Console.WriteLine($"Itens cadastrados: {itens.Count}");
                 Console.WriteLine($"Total acumulado (valor x quantidade): R$ {total:F2}");
             }
