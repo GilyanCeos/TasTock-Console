@@ -92,7 +92,7 @@ namespace TasTock.Services
             else
             {
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
-                Console.WriteLine($"Itens cadastrados: {itens.Count}");
+                Console.WriteLine($"\n Itens cadastrados: {itens.Count} \n");
                 foreach (var item in itens)
                     {
                         Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
