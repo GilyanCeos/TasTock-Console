@@ -107,18 +107,8 @@ namespace TasTock.Services
                 Console.WriteLine($"\n Total acumulado (valor x quantidade):\n");
                 Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
                 Console.WriteLine($"{total:F2}");
+                Console.ReadKey();
             }
-
-            var relatorioRepo = new RelatorioRepository();
-            relatorioRepo.Registrar(new Relatorio
-            {
-                Tipo = "Venda", // ou "Reposição"
-                NomeItem = Item.Nome,
-                Quantidade = quantidade,
-                ValorTotal = item.PrecoUnitario * quantidade,
-                Data = DateTime.Now
-            });
-            Console.ReadKey();
         }
 
         public void Listar()
@@ -250,12 +240,24 @@ namespace TasTock.Services
             Console.WriteLine($"Desconto aplicado: {valorDesconto.ToString("C", new System.Globalization.CultureInfo("pt-BR"))} ({desconto}%)");
             Console.WriteLine($"Valor final a pagar: {totalFinal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))}");
 
-             // Atualizar estoque
+            // Atualizar estoque
             item.Quantidade -= quantidade;
             _repo.Atualizar(item);
 
+            // Registrar Venda
+            var relatorioRepo = new RelatorioRepository();
+            relatorioRepo.Registrar(new Relatorio
+            {
+                Tipo = "Venda",
+                NomeItem = item.Nome,
+                Quantidade = quantidade,
+                ValorTotal = totalFinal,
+                Data = DateTime.Now
+            });
+
             Console.WriteLine("\nVenda realizada com sucesso.");
             Console.ReadKey();
+            
         }
 
     }
