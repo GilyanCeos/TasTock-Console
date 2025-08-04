@@ -152,7 +152,7 @@ namespace TasTock.Services
 
         private void ExportarCsv(IEnumerable<Item> itens)
         {
-            var path = "exportacao_tastock.csv";
+            var path = "Estoque_{dataFormatadaInicio}_a_{dataFormatadaFim}.csv";
 
             using (var writer = new StreamWriter(path))
             {
@@ -285,15 +285,10 @@ namespace TasTock.Services
 
             var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
 
-            //repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
+            repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
 
             Console.Clear();
             Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
-
-            // foreach (var rel in relatorios)
-            // {
-            //     Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
-            // }
 
             if (!relatorios.Any())
             {

@@ -40,7 +40,7 @@ namespace TasTock.Repositories
 
             foreach (var r in relatorios)
             {
-                writer.WriteLine($"{r.Data:yyyy-MM-dd HH:mm},{r.Tipo},{r.NomeItem},{r.Quantidade},{r.ValorTotal:F2}");
+                writer.WriteLine($"{r.Data:dd-MM-yyyy às HH:mm},{r.Tipo},{r.NomeItem},{r.Quantidade},{r.ValorTotal:F2}");
             }
 
             Console.WriteLine($"\nRelatório exportado como '{nomeArquivo}'.");
