@@ -152,7 +152,8 @@ namespace TasTock.Services
 
         private void ExportarCsv(IEnumerable<Item> itens)
         {
-            var path = "Estoque_{dataFormatadaInicio}_a_{dataFormatadaFim}.csv";
+            string dataAtual = DateTime.Now.ToString("dd-MM-yyyy");
+            var path = $"Estoque_{dataAtual}.csv";
 
             using (var writer = new StreamWriter(path))
             {
