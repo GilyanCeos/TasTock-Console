@@ -106,13 +106,13 @@ namespace TasTock.Services
                 }
                 Console.WriteLine($"\n Total acumulado (valor x quantidade):\n");
                 Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
-                Console.WriteLine( $"{total:F2}");
+                Console.WriteLine($"{total:F2}");
             }
             Console.ReadKey();
         }
 
         public void Listar()
-         {
+        {
             while (true)
             {
                 Console.Clear();
@@ -127,10 +127,10 @@ namespace TasTock.Services
                 Console.Write("\nEscolha uma opção: ");
                 string opcao = Console.ReadLine() ?? "";
 
-                 var itens = _repo.Listar();
-                 IEnumerable<Item> resultado = itens;
+                var itens = _repo.Listar();
+                IEnumerable<Item> resultado = itens;
 
-                 switch (opcao)
+                switch (opcao)
                 {
                     case "1":
                         Console.Write("Digite o nome, ou tecle Enter para lista completa: ");
@@ -163,16 +163,16 @@ namespace TasTock.Services
                         continue;
                 }
 
-                        Console.WriteLine("\n--- RESULTADO ---\n");
-                        foreach (var item in resultado)
-                        {
-                            Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
-                        }
-
-                        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
-                        Console.ReadKey();
-                    }
+                Console.WriteLine("\n--- RESULTADO ---\n");
+                foreach (var item in resultado)
+                {
+                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
                 }
+
+                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
+                Console.ReadKey();
+            }
+        }
 
         private void ExportarCsv(IEnumerable<Item> itens)
         {
@@ -190,5 +190,63 @@ namespace TasTock.Services
             Console.WriteLine($"\nExportação concluída: {path}");
             Console.ReadKey();
         }
+        public void RealizarVenda()
+        {
+            Console.Clear();
+            Console.WriteLine("==== REALIZAR VENDA ====\n");
+
+            Console.Write("Nome do produto: ");
+            string nomeProduto = Console.ReadLine() ?? "";
+
+            var itens = _repo.Listar();
+            var item = itens.FirstOrDefault(i => i.Nome.Equals(nomeProduto, StringComparison.OrdinalIgnoreCase));
+
+            if (item == null)
+            {
+                Console.WriteLine("Produto não encontrado.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Quantidade a vender: ");
+            if (!int.TryParse(Console.ReadLine(), out int quantidade) || quantidade <= 0)
+            {
+                Console.WriteLine("Quantidade inválida.");
+                Console.ReadKey();
+                return;
+            }
+
+            if (quantidade > item.Quantidade)
+            {
+                Console.WriteLine($"Quantidade insuficiente em estoque. Disponível: {item.Quantidade}");
+                Console.ReadKey();
+                return;
+            }
+
+            decimal total = quantidade * item.PrecoUnitario;
+
+            Console.Write("Desconto (%) [0-100]: ");
+            if (!int.TryParse(Console.ReadLine(), out int desconto) || desconto < 0 || desconto > 100)
+            {
+                Console.WriteLine("Desconto inválido.");
+                Console.ReadKey();
+                return;
+            }
+
+            decimal valorDesconto = total * desconto / 100;
+            decimal totalFinal = total - valorDesconto;
+
+            Console.WriteLine($"\nValor total sem desconto: {total.ToString("C", new System.Globalization.CultureInfo("pt-BR"))}");
+            Console.WriteLine($"Desconto aplicado: {valorDesconto.ToString("C", new System.Globalization.CultureInfo("pt-BR"))} ({desconto}%)");
+            Console.WriteLine($"Valor final a pagar: {totalFinal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))}");
+
+             // Atualizar estoque
+            item.Quantidade -= quantidade;
+            _repo.Atualizar(item);
+
+            Console.WriteLine("\nVenda realizada com sucesso.");
+            Console.ReadKey();
+        }
+
     }
 }
