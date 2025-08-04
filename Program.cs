@@ -18,10 +18,9 @@ namespace TasTock
                 Console.WriteLine("\n[1] Cadastrar novo item");
                 Console.WriteLine("[2] Editar");
                 Console.WriteLine("[3] Listar, filtrar e exportar");
-                Console.WriteLine("[4] Calcular total");
-                Console.WriteLine("[5] Remover item");
+                Console.WriteLine("[4] Remover item");
+                Console.WriteLine("\n[5] Controle de caixa");
                 Console.WriteLine("\n[6] Realizar venda");
-
                 Console.WriteLine("\n[0] Sair");
                 Console.Write("\nEscolha: ");
                 string opcao = Console.ReadLine() ?? "";
@@ -31,8 +30,8 @@ namespace TasTock
                     case "1": service.Cadastrar(); break;
                     case "2": service.Editar(); break;
                     case "3": service.Listar(); break; // listar com filtros e ordenação
-                    case "4": service.Calcular(); break;
-                    case "5": service.Remover(); break;
+                    case "4": service.Remover(); break;
+                    case "5": service.Calcular(); break;
                     case "6": service.RealizarVenda(); break;
                     case "0": return;
                     default:

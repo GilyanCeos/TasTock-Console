@@ -16,7 +16,7 @@ namespace TasTock.Services
         public void Cadastrar()
         {
             Console.Clear();
-            Console.WriteLine("==== CADASTRAR NOVO ITEM ====");
+            Console.WriteLine("CADASTRAR NOVO ITEM");
 
             Console.Write("Nome do item: ");
             string? nome = Console.ReadLine();
@@ -87,6 +87,85 @@ namespace TasTock.Services
             Console.ReadKey();
         }
 
+        public void Listar()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("ITENS CADASTRADOS\n");
+
+                Console.WriteLine("[1] Listar por nome");
+                Console.WriteLine("[2] Listar por faixa de preço");
+                Console.WriteLine("[3] Ordenar por data de cadastro");
+                Console.WriteLine("[4] Exportar para CSV");
+                Console.WriteLine("[0] Voltar");
+
+                Console.Write("\nEscolha uma opção: ");
+                string opcao = Console.ReadLine() ?? "";
+
+                var itens = _repo.Listar();
+                IEnumerable<Item> resultado = itens;
+
+                switch (opcao)
+                {
+                    case "1":
+                        Console.Write("Digite o nome, ou tecle Enter para lista completa: ");
+                        string termo = Console.ReadLine() ?? "";
+                        resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
+                        break;
+
+                    case "2":
+                        Console.Write("Preço mínimo: ");
+                        decimal.TryParse(Console.ReadLine(), out decimal min);
+                        Console.Write("Preço máximo: ");
+                        decimal.TryParse(Console.ReadLine(), out decimal max);
+                        resultado = itens.Where(i => i.PrecoUnitario >= min && i.PrecoUnitario <= max);
+                        break;
+
+                    case "3":
+                        resultado = itens.OrderBy(i => i.CadastradoEm);
+                        break;
+
+                    case "4":
+                        ExportarCsv(itens);
+                        return;
+
+                    case "0":
+                        return;
+
+                    default:
+                        Console.WriteLine("Opção inválida.");
+                        Console.ReadKey();
+                        continue;
+                }
+
+                Console.WriteLine("\nRESULTADO\n");
+                foreach (var item in resultado)
+                {
+                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
+                }
+
+                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
+                Console.ReadKey();
+            }
+        }
+
+        private void ExportarCsv(IEnumerable<Item> itens)
+        {
+            var path = "exportacao_tastock.csv";
+
+            using (var writer = new StreamWriter(path))
+            {
+                writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
+                foreach (var item in itens)
+                {
+                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
+                }
+            }
+
+            Console.WriteLine($"\nExportação concluída: {path}");
+            Console.ReadKey();
+        }
         public void Calcular()
         {
             while (true)
@@ -149,7 +228,7 @@ namespace TasTock.Services
             var repoRelatorio = new RelatorioRepository();
 
             Console.Clear();
-            Console.WriteLine("RELATÓRIOS POR PERÍODO ===");
+            Console.WriteLine("RELATÓRIOS POR PERÍODO");
             Console.WriteLine("[1] Diário");
             Console.WriteLine("[2] Semanal");
             Console.WriteLine("[3] Mensal");
@@ -191,7 +270,7 @@ namespace TasTock.Services
             var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
 
             Console.Clear();
-            Console.WriteLine($"=== RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} ===\n");
+            Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
 
             foreach (var rel in relatorios)
             {
@@ -206,90 +285,10 @@ namespace TasTock.Services
             Console.WriteLine("\nPressione qualquer tecla para voltar...");
             Console.ReadKey();
         }
-
-        public void Listar()
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("==== ITENS CADASTRADOS ====\n");
-
-                Console.WriteLine("[1] Listar por nome");
-                Console.WriteLine("[2] Listar por faixa de preço");
-                Console.WriteLine("[3] Ordenar por data de cadastro");
-                Console.WriteLine("[4] Exportar para CSV");
-                Console.WriteLine("[0] Voltar");
-
-                Console.Write("\nEscolha uma opção: ");
-                string opcao = Console.ReadLine() ?? "";
-
-                var itens = _repo.Listar();
-                IEnumerable<Item> resultado = itens;
-
-                switch (opcao)
-                {
-                    case "1":
-                        Console.Write("Digite o nome, ou tecle Enter para lista completa: ");
-                        string termo = Console.ReadLine() ?? "";
-                        resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
-                        break;
-
-                    case "2":
-                        Console.Write("Preço mínimo: ");
-                        decimal.TryParse(Console.ReadLine(), out decimal min);
-                        Console.Write("Preço máximo: ");
-                        decimal.TryParse(Console.ReadLine(), out decimal max);
-                        resultado = itens.Where(i => i.PrecoUnitario >= min && i.PrecoUnitario <= max);
-                        break;
-
-                    case "3":
-                        resultado = itens.OrderBy(i => i.CadastradoEm);
-                        break;
-
-                    case "4":
-                        ExportarCsv(itens);
-                        return;
-
-                    case "0":
-                        return;
-
-                    default:
-                        Console.WriteLine("Opção inválida.");
-                        Console.ReadKey();
-                        continue;
-                }
-
-                Console.WriteLine("\n--- RESULTADO ---\n");
-                foreach (var item in resultado)
-                {
-                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
-                }
-
-                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
-                Console.ReadKey();
-            }
-        }
-
-        private void ExportarCsv(IEnumerable<Item> itens)
-        {
-            var path = "exportacao_tastock.csv";
-
-            using (var writer = new StreamWriter(path))
-            {
-                writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
-                foreach (var item in itens)
-                {
-                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
-                }
-            }
-
-            Console.WriteLine($"\nExportação concluída: {path}");
-            Console.ReadKey();
-        }
         public void RealizarVenda()
         {
             Console.Clear();
-            Console.WriteLine("==== REALIZAR VENDA ====\n");
+            Console.WriteLine("REALIZAR VENDA\n");
 
             Console.Write("Nome do produto: ");
             string nomeProduto = Console.ReadLine() ?? "";
@@ -305,21 +304,19 @@ namespace TasTock.Services
             }
 
             Console.Write("Quantidade a vender: ");
-            if (!int.TryParse(Console.ReadLine(), out int quantidade) || quantidade <= 0)
+            if (!int.TryParse(Console.ReadLine(), out int quantidadeVendida) || quantidadeVendida <= 0)
             {
                 Console.WriteLine("Quantidade inválida.");
                 Console.ReadKey();
                 return;
             }
 
-            if (quantidade > item.Quantidade)
+            if (quantidadeVendida > item.Quantidade)
             {
                 Console.WriteLine($"Quantidade insuficiente em estoque. Disponível: {item.Quantidade}");
                 Console.ReadKey();
                 return;
             }
-
-            decimal total = quantidade * item.PrecoUnitario;
 
             Console.Write("Desconto (%) [0-100]: ");
             if (!int.TryParse(Console.ReadLine(), out int desconto) || desconto < 0 || desconto > 100)
@@ -329,32 +326,48 @@ namespace TasTock.Services
                 return;
             }
 
-            decimal valorDesconto = total * desconto / 100;
-            decimal totalFinal = total - valorDesconto;
+            // Calcular totais
+            decimal valorBruto = quantidadeVendida * item.PrecoUnitario;
+            decimal valorDesconto = valorBruto * desconto / 100m;
+            decimal valorFinal = valorBruto - valorDesconto;
 
-            Console.WriteLine($"\nValor total sem desconto: {total.ToString("C", new System.Globalization.CultureInfo("pt-BR"))}");
-            Console.WriteLine($"Desconto aplicado: {valorDesconto.ToString("C", new System.Globalization.CultureInfo("pt-BR"))} ({desconto}%)");
-            Console.WriteLine($"Valor final a pagar: {totalFinal.ToString("C", new System.Globalization.CultureInfo("pt-BR"))}");
+            // Total antes da venda
+            decimal totalAntes = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
 
             // Atualizar estoque
-            item.Quantidade -= quantidade;
+            item.Quantidade -= quantidadeVendida;
             _repo.Atualizar(item);
 
-            // Registrar Venda
-            var relatorioRepo = new RelatorioRepository();
-            relatorioRepo.Registrar(new Relatorio
-            {
-                Tipo = "Venda",
-                NomeItem = item.Nome,
-                Quantidade = quantidade,
-                ValorTotal = totalFinal,
-                Data = DateTime.Now
-            });
+            // Total depois da venda
+            decimal totalDepois = _repo.Listar().Sum(i => i.PrecoUnitario * i.Quantidade);
 
-            Console.WriteLine("\nVenda realizada com sucesso.");
+            // Registrar no relatório
+            var repoRel = new RelatorioRepository();
+            var relatorio = new Relatorio
+            {
+                NomeItem = item.Nome,
+                Tipo = "Saída",
+                Quantidade = quantidadeVendida,
+                ValorTotal = valorFinal,
+                Data = DateTime.Now
+            };
+            repoRel.Registrar(relatorio);
+
+            // Exibir resumo
+            var cultura = new System.Globalization.CultureInfo("pt-BR");
+
+            Console.WriteLine($"\nVenda registrada com sucesso!");
+            Console.WriteLine($"Valor bruto: {valorBruto.ToString("C", cultura)}");
+            Console.WriteLine($"Desconto aplicado: {valorDesconto.ToString("C", cultura)} ({desconto}%)");
+            Console.WriteLine($"Valor final da venda: {valorFinal.ToString("C", cultura)}");
+
+            Console.WriteLine($"\nTotal em estoque ANTES da venda: {totalAntes.ToString("C", cultura)}");
+            Console.WriteLine($"Total em estoque DEPOIS da venda: {totalDepois.ToString("C", cultura)}");
+
+            Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
-            
         }
+
 
     }
 }
