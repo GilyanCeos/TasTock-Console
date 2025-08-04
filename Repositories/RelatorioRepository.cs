@@ -17,6 +17,7 @@ namespace TasTock.Repositories
 
         public List<Relatorio> ListarPorPeriodo(DateTime inicio, DateTime fim)
         {
+            using var context = new AppDbContext();
             return _context.Relatorios
                 .Where(r => r.Data >= inicio && r.Data <= fim)
                 .ToList();
