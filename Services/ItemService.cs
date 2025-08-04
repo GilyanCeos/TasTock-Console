@@ -89,6 +89,37 @@ namespace TasTock.Services
 
         public void Calcular()
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Controle de caixa\n");
+                Console.WriteLine("[1] Exibir total acumulado atual");
+                Console.WriteLine("[2] Relatórios por período");
+                Console.WriteLine("[0] Voltar");
+
+                Console.Write("\nEscolha uma opção: ");
+                string opcao = Console.ReadLine() ?? "";
+
+                switch (opcao)
+                {
+                    case "1":
+                        ExibirTotalAtual();
+                        break;
+                    case "2":
+                        ExibirRelatorios();
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Opção inválida.");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
+
+        private void ExibirTotalAtual()
+        {
             Console.Clear();
             var itens = _repo.Listar();
 
@@ -99,16 +130,81 @@ namespace TasTock.Services
             else
             {
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
-                Console.WriteLine($"\n Itens cadastrados: {itens.Count} \n");
+                Console.WriteLine($"\nItens cadastrados: {itens.Count}\n");
                 foreach (var item in itens)
                 {
-                    Console.WriteLine($" ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
+                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
                 }
-                Console.WriteLine($"\n Total acumulado (valor x quantidade):\n");
+
+                Console.WriteLine($"\nTotal acumulado (valor x quantidade):");
                 Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
-                Console.WriteLine($"{total:F2}");
-                Console.ReadKey();
             }
+
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.ReadKey();
+        }
+
+        private void ExibirRelatorios()
+        {
+            var repoRelatorio = new RelatorioRepository();
+
+            Console.Clear();
+            Console.WriteLine("RELATÓRIOS POR PERÍODO ===");
+            Console.WriteLine("[1] Diário");
+            Console.WriteLine("[2] Semanal");
+            Console.WriteLine("[3] Mensal");
+            Console.WriteLine("[4] Anual");
+            Console.WriteLine("[0] Voltar");
+
+            Console.Write("\nEscolha uma opção: ");
+            var opcao = Console.ReadLine();
+
+            DateTime hoje = DateTime.Today;
+            DateTime inicio, fim;
+
+            switch (opcao)
+            {
+                case "1":
+                    inicio = hoje;
+                    fim = hoje.AddDays(1);
+                    break;
+                case "2":
+                    inicio = hoje.AddDays(-7);
+                    fim = hoje.AddDays(1);
+                    break;
+                case "3":
+                    inicio = new DateTime(hoje.Year, hoje.Month, 1);
+                    fim = inicio.AddMonths(1);
+                    break;
+                case "4":
+                    inicio = new DateTime(hoje.Year, 1, 1);
+                    fim = inicio.AddYears(1);
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Opção inválida.");
+                    Console.ReadKey();
+                    return;
+            }
+
+            var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
+
+            Console.Clear();
+            Console.WriteLine($"=== RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} ===\n");
+
+            foreach (var rel in relatorios)
+            {
+                Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
+            }
+
+            if (!relatorios.Any())
+            {
+                Console.WriteLine("Nenhum relatório encontrado para o período.");
+            }
+
+            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.ReadKey();
         }
 
         public void Listar()
