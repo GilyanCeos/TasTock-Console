@@ -285,21 +285,34 @@ namespace TasTock.Services
 
             var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
 
-            repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
+            //repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
 
             Console.Clear();
             Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
 
-            foreach (var rel in relatorios)
-            {
-                Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
-            }
+            // foreach (var rel in relatorios)
+            // {
+            //     Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
+            // }
 
             if (!relatorios.Any())
             {
                 Console.WriteLine("Nenhum relatório encontrado para o período.");
             }
+            else
+            {
+                foreach (var rel in relatorios)
+                {
+                    Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
+                }
+            }
 
+            Console.Write("\nDeseja exportar este relatório? (S/N): ");
+            var resposta = Console.ReadLine();
+            if (!string.IsNullOrEmpty(resposta) && (resposta.Equals("S", StringComparison.OrdinalIgnoreCase)))
+            {
+                repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
+            }
             Console.WriteLine("\nPressione qualquer tecla para voltar...");
             Console.ReadKey();
         }
