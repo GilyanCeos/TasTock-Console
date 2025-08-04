@@ -7,10 +7,12 @@ namespace TasTock.Services
     public class ItemService
     {
         private readonly ItemRepository _repo;
+        private readonly RelatorioRepository _repoRelatorio;
 
         public ItemService(ItemRepository repo)
         {
             _repo = repo;
+            _repoRelatorio = new RelatorioRepository();
         }
 
         public void Cadastrar()
@@ -21,26 +23,27 @@ namespace TasTock.Services
             Console.Write("Nome do item: ");
             string? nome = Console.ReadLine();
 
-            Console.Write("Quantidade: ");
-            //int.TryParse(Console.ReadLine(), out int qtd);
             int qtd;
             do
             {
                 Console.Write("Quantidade: ");
-            } while (!int.TryParse(Console.ReadLine(), out qtd));
+            } while (!int.TryParse(Console.ReadLine(), out qtd) || qtd < 0);
 
-
-            Console.Write("Preço unitário: ");
-            decimal.TryParse(Console.ReadLine(), out decimal preco);
+            decimal preco;
+            do
+            {
+                Console.Write("Preço unitário: ");
+            } while (!decimal.TryParse(Console.ReadLine(), out preco) || preco < 0);
 
             var item = new Item
             {
-                Nome = nome ?? "",
+                Nome = nome?.Trim() ?? "",
                 Quantidade = qtd,
                 PrecoUnitario = preco
             };
 
             _repo.Adicionar(item);
+
             Console.WriteLine("Item cadastrado com sucesso.");
             Console.ReadKey();
         }
@@ -50,7 +53,12 @@ namespace TasTock.Services
             Console.Clear();
             Listar();
             Console.Write("\nInforme o ID do item a editar: ");
-            int.TryParse(Console.ReadLine(), out int id);
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("ID inválido.");
+                Console.ReadKey();
+                return;
+            }
 
             var item = _repo.BuscarPorId(id);
             if (item == null)
@@ -62,15 +70,19 @@ namespace TasTock.Services
 
             Console.Write($"Novo nome ({item.Nome}): ");
             var nome = Console.ReadLine();
-            item.Nome = string.IsNullOrWhiteSpace(nome) ? item.Nome : nome;
+            if (!string.IsNullOrWhiteSpace(nome))
+                item.Nome = nome.Trim();
 
             Console.Write($"Nova quantidade ({item.Quantidade}): ");
-            if (int.TryParse(Console.ReadLine(), out int qtd)) item.Quantidade = qtd;
+            if (int.TryParse(Console.ReadLine(), out int qtd) && qtd >= 0)
+                item.Quantidade = qtd;
 
             Console.Write($"Novo preço unitário ({item.PrecoUnitario}): ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal preco)) item.PrecoUnitario = preco;
+            if (decimal.TryParse(Console.ReadLine(), out decimal preco) && preco >= 0)
+                item.PrecoUnitario = preco;
 
             _repo.Atualizar(item);
+
             Console.WriteLine("Item atualizado.");
             Console.ReadKey();
         }
@@ -80,9 +92,15 @@ namespace TasTock.Services
             Console.Clear();
             Listar();
             Console.Write("\nInforme o ID do item a remover: ");
-            int.TryParse(Console.ReadLine(), out int id);
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("ID inválido.");
+                Console.ReadKey();
+                return;
+            }
 
             _repo.Remover(id);
+
             Console.WriteLine("Item removido.");
             Console.ReadKey();
         }
@@ -93,7 +111,6 @@ namespace TasTock.Services
             {
                 Console.Clear();
                 Console.WriteLine("ITENS CADASTRADOS\n");
-
                 Console.WriteLine("[1] Listar por nome");
                 Console.WriteLine("[2] Listar por faixa de preço");
                 Console.WriteLine("[3] Ordenar por data de cadastro");
@@ -109,7 +126,7 @@ namespace TasTock.Services
                 switch (opcao)
                 {
                     case "1":
-                        Console.Write("Digite o nome, ou tecle Enter para lista completa: ");
+                        Console.Write("Digite o nome (ou Enter para lista completa): ");
                         string termo = Console.ReadLine() ?? "";
                         resultado = itens.Where(i => i.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase));
                         break;
@@ -142,30 +159,30 @@ namespace TasTock.Services
                 Console.WriteLine("\nRESULTADO\n");
                 foreach (var item in resultado)
                 {
-                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
+                    Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
                 }
 
-                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
+                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
                 Console.ReadKey();
             }
         }
 
         private void ExportarCsv(IEnumerable<Item> itens)
         {
-            var path = "exportacao_tastock.csv";
+            string path = "exportacao_tastock.csv";
 
-            using (var writer = new StreamWriter(path))
+            using var writer = new StreamWriter(path);
+            writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
+
+            foreach (var item in itens)
             {
-                writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
-                foreach (var item in itens)
-                {
-                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
-                }
+                writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
             }
 
             Console.WriteLine($"\nExportação concluída: {path}");
             Console.ReadKey();
         }
+
         public void Calcular()
         {
             while (true)
@@ -216,8 +233,9 @@ namespace TasTock.Services
                     Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
                 }
 
-                var repoRel = new RelatorioRepository();
-                var ultimoRegistro = repoRel.Listar().OrderByDescending(r => r.Data).FirstOrDefault();
+                var ultimoRegistro = _repoRelatorio.Listar()
+                    .OrderByDescending(r => r.Data)
+                    .FirstOrDefault();
 
                 Console.WriteLine("\nTotais de Estoque\n");
 
@@ -232,17 +250,14 @@ namespace TasTock.Services
                 }
 
                 Console.WriteLine($"\nTotal ATUAL (calculado): {totalAtual.ToString("C", new CultureInfo("pt-BR"))}");
-                Console.WriteLine($"{totalAtual:F2}");
             }
 
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
+
         private void ExibirRelatorios()
         {
-            var repoRelatorio = new RelatorioRepository();
-            var todosRelatorios = repoRelatorio.Listar();
-
             Console.Clear();
             Console.WriteLine("RELATÓRIOS POR PERÍODO");
             Console.WriteLine("[1] Diário");
@@ -252,12 +267,12 @@ namespace TasTock.Services
             Console.WriteLine("[0] Voltar");
 
             Console.Write("\nEscolha uma opção: ");
-            var opcao = Console.ReadLine();
+            string? opcao = Console.ReadLine();
 
             DateTime hoje = DateTime.Today;
             DateTime dataInicio, dataFim;
             List<Relatorio> relFiltrados;
-            string tipo = "";
+            string tipo;
 
             switch (opcao)
             {
@@ -294,12 +309,7 @@ namespace TasTock.Services
                     return;
             }
 
-            relFiltrados = todosRelatorios
-                .Where(r => r.Data.Date >= dataInicio && r.Data.Date <= dataFim)
-                .ToList();
-
-            // Exportação com nome personalizado
-            repoRelatorio.ExportarRelatorios(relFiltrados, tipo, dataInicio, dataFim);
+            relFiltrados = _repoRelatorio.ListarPorPeriodo(dataInicio, dataFim);
 
             Console.Clear();
             Console.WriteLine($"RELATÓRIOS DE {dataInicio:dd/MM/yyyy} A {dataFim:dd/MM/yyyy}\n");
@@ -318,7 +328,16 @@ namespace TasTock.Services
 
             Console.WriteLine("\nPressione qualquer tecla para voltar...");
             Console.ReadKey();
+
+            // Pergunta se deseja exportar após mostrar
+            Console.Write("\nDeseja exportar este relatório? (S/N): ");
+            var exportar = Console.ReadLine();
+            if (!string.IsNullOrEmpty(exportar) && exportar.Trim().ToUpper() == "S")
+            {
+                _repoRelatorio.ExportarRelatorios(relFiltrados, tipo, dataInicio, dataFim);
+            }
         }
+
         public void RealizarVenda()
         {
             Console.Clear();
@@ -376,7 +395,6 @@ namespace TasTock.Services
             decimal totalDepois = _repo.Listar().Sum(i => i.PrecoUnitario * i.Quantidade);
 
             // Registrar no relatório
-            var repoRel = new RelatorioRepository();
             var relatorio = new Relatorio
             {
                 NomeItem = item.Nome,
@@ -387,10 +405,10 @@ namespace TasTock.Services
                 ValorDepois = totalDepois,
                 Data = DateTime.Now
             };
-            repoRel.Registrar(relatorio);
+            _repoRelatorio.Registrar(relatorio);
 
             // Exibir resumo
-            var cultura = new System.Globalization.CultureInfo("pt-BR");
+            var cultura = new CultureInfo("pt-BR");
 
             Console.WriteLine($"\nVenda registrada com sucesso!");
             Console.WriteLine($"Valor bruto: {valorBruto.ToString("C", cultura)}");
@@ -403,7 +421,5 @@ namespace TasTock.Services
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
-
-
     }
 }
