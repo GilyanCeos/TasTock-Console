@@ -8,5 +8,8 @@ namespace TasTock.Models
         public string NomeItem { get; set; } = string.Empty;
         public int Quantidade { get; set; }
         public decimal ValorTotal { get; set; }
+        public decimal ValorAntes { get; set; }
+        public decimal ValorDepois { get; set; }
+
     }
 }

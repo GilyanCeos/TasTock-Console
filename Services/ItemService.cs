@@ -208,20 +208,65 @@ namespace TasTock.Services
             }
             else
             {
-                decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
+                decimal totalAtual = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
+
                 Console.WriteLine($"\nItens cadastrados: {itens.Count}\n");
                 foreach (var item in itens)
                 {
                     Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
                 }
 
-                Console.WriteLine($"\nTotal acumulado (valor x quantidade):");
-                Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
+                var repoRel = new RelatorioRepository();
+                var ultimoRegistro = repoRel.Listar().OrderByDescending(r => r.Data).FirstOrDefault();
+
+                Console.WriteLine("\n=== Totais de Estoque ===\n");
+
+                if (ultimoRegistro != null)
+                {
+                    Console.WriteLine($"Total ANTERIOR registrado: {ultimoRegistro.ValorAntes.ToString("C", new CultureInfo("pt-BR"))}");
+                    Console.WriteLine($"Total registrado APÓS última venda/reposição: {ultimoRegistro.ValorDepois.ToString("C", new CultureInfo("pt-BR"))}");
+                }
+                else
+                {
+                    Console.WriteLine("Nenhum registro anterior encontrado.");
+                }
+
+                Console.WriteLine($"\nTotal ATUAL (calculado): {totalAtual.ToString("C", new CultureInfo("pt-BR"))}");
+                Console.WriteLine($"{totalAtual:F2}");
             }
 
-            Console.WriteLine("\nPressione qualquer tecla para voltar...");
+            Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
+
+
+
+        // private void ExibirTotalAtual()
+        // {
+        //     Console.Clear();
+        //     var itens = _repo.Listar();
+
+        //     if (!itens.Any())
+        //     {
+        //         Console.WriteLine("Nenhum item cadastrado.");
+        //     }
+        //     else
+        //     {
+        //         decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
+
+        //         Console.WriteLine($"\nItens cadastrados: {itens.Count}\n");
+        //         foreach (var item in itens)
+        //         {
+        //             Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
+        //         }
+
+        //         Console.WriteLine($"\nTotal acumulado (valor x quantidade):");
+        //         Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
+        //     }
+
+        //     Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        //     Console.ReadKey();
+        // }
 
         private void ExibirRelatorios()
         {
@@ -349,6 +394,8 @@ namespace TasTock.Services
                 Tipo = "Saída",
                 Quantidade = quantidadeVendida,
                 ValorTotal = valorFinal,
+                ValorAntes = totalAntes,
+                ValorDepois = totalDepois,
                 Data = DateTime.Now
             };
             repoRel.Registrar(relatorio);

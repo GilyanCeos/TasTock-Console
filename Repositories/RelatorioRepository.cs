@@ -21,5 +21,11 @@ namespace TasTock.Repositories
                 .Where(r => r.Data >= inicio && r.Data <= fim)
                 .ToList();
         }
+        public List<Relatorio> Listar()
+        {
+            using var context = new AppDbContext();
+            return context.Relatorios.ToList();
+        }
+
     }
 }
