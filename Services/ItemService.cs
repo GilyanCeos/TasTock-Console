@@ -108,6 +108,16 @@ namespace TasTock.Services
                 Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
                 Console.WriteLine($"{total:F2}");
             }
+
+            var relatorioRepo = new RelatorioRepository();
+            relatorioRepo.Registrar(new Relatorio
+            {
+                Tipo = "Venda", // ou "Reposição"
+                NomeItem = Item.Nome,
+                Quantidade = quantidade,
+                ValorTotal = item.PrecoUnitario * quantidade,
+                Data = DateTime.Now
+            });
             Console.ReadKey();
         }
 

@@ -6,6 +6,7 @@ namespace TasTock
     public class AppDbContext : DbContext
     {
         public DbSet<Item> Itens { get; set; }
+        public DbSet<Relatorio> Relatorios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
