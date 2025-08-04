@@ -285,6 +285,8 @@ namespace TasTock.Services
 
             var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
 
+            repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
+
             Console.Clear();
             Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
 
