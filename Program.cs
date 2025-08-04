@@ -17,7 +17,7 @@ namespace TasTock
                 Console.WriteLine("TasTock");
                 Console.WriteLine("\n[1] Cadastrar novo item");
                 Console.WriteLine("[2] Editar");
-                Console.WriteLine("[3] Listar, filtrar e exportar");
+                Console.WriteLine("[3] Controle de estoque");
                 Console.WriteLine("[4] Remover item");
                 Console.WriteLine("\n[5] Controle de caixa");
                 Console.WriteLine("\n[6] Realizar venda");

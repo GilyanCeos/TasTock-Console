@@ -22,7 +22,6 @@ namespace TasTock.Services
             string? nome = Console.ReadLine();
 
             Console.Write("Quantidade: ");
-            //int.TryParse(Console.ReadLine(), out int qtd);
             int qtd;
             do
             {
@@ -160,7 +159,7 @@ namespace TasTock.Services
                 writer.WriteLine("Id,Nome,Quantidade,PrecoUnitario,CadastradoEm");
                 foreach (var item in itens)
                 {
-                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:yyyy-MM-dd}");
+                    writer.WriteLine($"{item.Id},{item.Nome},{item.Quantidade},{item.PrecoUnitario},{item.CadastradoEm:dd-MM-yyyy}");
                 }
             }
 
@@ -220,7 +219,7 @@ namespace TasTock.Services
                 var repoRel = new RelatorioRepository();
                 var ultimoRegistro = repoRel.Listar().OrderByDescending(r => r.Data).FirstOrDefault();
 
-                Console.WriteLine("\nTotais de Estoque ===\n");
+                Console.WriteLine("\nTotais de Estoque\n");
 
                 if (ultimoRegistro != null)
                 {
