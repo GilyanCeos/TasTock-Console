@@ -26,6 +26,22 @@ namespace TasTock.Repositories
             using var context = new AppDbContext();
             return context.Relatorios.ToList();
         }
+       public void ExportarRelatorios(List<Relatorio> relatorios, string periodo, DateTime dataInicio, DateTime dataFim)
+        {
+            string inicio = dataInicio.ToString("yyyy-MM-dd");
+            string fim = dataFim.ToString("yyyy-MM-dd");
+            string nomeArquivo = $"relatorio_{periodo.ToLower()}_{inicio}_a_{fim}.csv";
 
+            using var writer = new StreamWriter(nomeArquivo);
+            writer.WriteLine("Data,Tipo,NomeItem,Quantidade,ValorTotal");
+
+            foreach (var r in relatorios)
+            {
+                writer.WriteLine($"{r.Data:yyyy-MM-dd HH:mm},{r.Tipo},{r.NomeItem},{r.Quantidade},{r.ValorTotal:F2}");
+            }
+
+            Console.WriteLine($"\nRelatório exportado como '{nomeArquivo}'.");
+            Console.ReadKey();
+        }
     }
 }

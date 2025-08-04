@@ -219,7 +219,7 @@ namespace TasTock.Services
                 var repoRel = new RelatorioRepository();
                 var ultimoRegistro = repoRel.Listar().OrderByDescending(r => r.Data).FirstOrDefault();
 
-                Console.WriteLine("\n=== Totais de Estoque ===\n");
+                Console.WriteLine("\nTotais de Estoque\n");
 
                 if (ultimoRegistro != null)
                 {
@@ -238,39 +238,10 @@ namespace TasTock.Services
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
-
-
-
-        // private void ExibirTotalAtual()
-        // {
-        //     Console.Clear();
-        //     var itens = _repo.Listar();
-
-        //     if (!itens.Any())
-        //     {
-        //         Console.WriteLine("Nenhum item cadastrado.");
-        //     }
-        //     else
-        //     {
-        //         decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
-
-        //         Console.WriteLine($"\nItens cadastrados: {itens.Count}\n");
-        //         foreach (var item in itens)
-        //         {
-        //             Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
-        //         }
-
-        //         Console.WriteLine($"\nTotal acumulado (valor x quantidade):");
-        //         Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
-        //     }
-
-        //     Console.WriteLine("\nPressione qualquer tecla para voltar...");
-        //     Console.ReadKey();
-        // }
-
         private void ExibirRelatorios()
         {
             var repoRelatorio = new RelatorioRepository();
+            var todosRelatorios = repoRelatorio.Listar();
 
             Console.Clear();
             Console.WriteLine("RELATÓRIOS POR PERÍODO");
@@ -284,52 +255,160 @@ namespace TasTock.Services
             var opcao = Console.ReadLine();
 
             DateTime hoje = DateTime.Today;
-            DateTime inicio, fim;
+            DateTime dataInicio, dataFim;
+            List<Relatorio> relFiltrados;
+            string tipo = "";
 
             switch (opcao)
             {
-                case "1":
-                    inicio = hoje;
-                    fim = hoje.AddDays(1);
+                case "1": // Diário
+                    dataInicio = hoje;
+                    dataFim = hoje;
+                    tipo = "diario";
                     break;
-                case "2":
-                    inicio = hoje.AddDays(-7);
-                    fim = hoje.AddDays(1);
+
+                case "2": // Semanal
+                    dataInicio = hoje.AddDays(-6);
+                    dataFim = hoje;
+                    tipo = "semanal";
                     break;
-                case "3":
-                    inicio = new DateTime(hoje.Year, hoje.Month, 1);
-                    fim = inicio.AddMonths(1);
+
+                case "3": // Mensal
+                    dataInicio = new DateTime(hoje.Year, hoje.Month, 1);
+                    dataFim = dataInicio.AddMonths(1).AddDays(-1);
+                    tipo = "mensal";
                     break;
-                case "4":
-                    inicio = new DateTime(hoje.Year, 1, 1);
-                    fim = inicio.AddYears(1);
+
+                case "4": // Anual
+                    dataInicio = new DateTime(hoje.Year, 1, 1);
+                    dataFim = new DateTime(hoje.Year, 12, 31);
+                    tipo = "anual";
                     break;
+
                 case "0":
                     return;
+
                 default:
                     Console.WriteLine("Opção inválida.");
                     Console.ReadKey();
                     return;
             }
 
-            var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
+            relFiltrados = todosRelatorios
+                .Where(r => r.Data.Date >= dataInicio && r.Data.Date <= dataFim)
+                .ToList();
+
+            // Exportação com nome personalizado
+            repoRelatorio.ExportarRelatorios(relFiltrados, tipo, dataInicio, dataFim);
 
             Console.Clear();
-            Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
+            Console.WriteLine($"RELATÓRIOS DE {dataInicio:dd/MM/yyyy} A {dataFim:dd/MM/yyyy}\n");
 
-            foreach (var rel in relatorios)
-            {
-                Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
-            }
-
-            if (!relatorios.Any())
+            if (!relFiltrados.Any())
             {
                 Console.WriteLine("Nenhum relatório encontrado para o período.");
+            }
+            else
+            {
+                foreach (var rel in relFiltrados)
+                {
+                    Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
+                }
             }
 
             Console.WriteLine("\nPressione qualquer tecla para voltar...");
             Console.ReadKey();
         }
+        // private void ExibirRelatorios()
+        // {
+        //     var repoRelatorio = new RelatorioRepository();
+
+        //     Console.Clear();
+        //     Console.WriteLine("RELATÓRIOS POR PERÍODO");
+        //     Console.WriteLine("[1] Diário");
+        //     Console.WriteLine("[2] Semanal");
+        //     Console.WriteLine("[3] Mensal");
+        //     Console.WriteLine("[4] Anual");
+        //     Console.WriteLine("[0] Voltar");
+
+        //     Console.Write("\nEscolha uma opção: ");
+        //     var opcao = Console.ReadLine();
+
+        //     DateTime hoje = DateTime.Today;
+        //     DateTime inicio, fim;
+
+        //     switch (opcao)
+        //     {
+        //         // case "1":
+        //         //     inicio = hoje;
+        //         //     fim = hoje.AddDays(1);
+        //         //     break;
+        //         // case "2":
+        //         //     inicio = hoje.AddDays(-7);
+        //         //     fim = hoje.AddDays(1);
+        //         //     break;
+        //         // case "3":
+        //         //     inicio = new DateTime(hoje.Year, hoje.Month, 1);
+        //         //     fim = inicio.AddMonths(1);
+        //         //     break;
+        //         // case "4":
+        //         //     inicio = new DateTime(hoje.Year, 1, 1);
+        //         //     fim = inicio.AddYears(1);
+        //         //     break;
+        //         // case "0":
+        //         //     return;
+        //         case "1": // Diário
+        //             dataInicio = hoje;
+        //             dataFim = hoje;
+        //             relFiltrados = relatorios.Where(r => r.Data.Date == hoje).ToList();
+        //             repo.ExportarRelatorios(relFiltrados, "diario", dataInicio, dataFim);
+        //             break;
+
+        //         case "2": // Semanal
+        //             dataInicio = hoje.AddDays(-6);
+        //             dataFim = hoje;
+        //             relFiltrados = relatorios.Where(r => r.Data.Date >= dataInicio && r.Data.Date <= dataFim).ToList();
+        //             repo.ExportarRelatorios(relFiltrados, "semanal", dataInicio, dataFim);
+        //             break;
+
+        //         case "3": // Mensal
+        //             dataInicio = new DateTime(hoje.Year, hoje.Month, 1);
+        //             dataFim = dataInicio.AddMonths(1).AddDays(-1);
+        //             relFiltrados = relatorios.Where(r => r.Data.Date >= dataInicio && r.Data.Date <= dataFim).ToList();
+        //             repo.ExportarRelatorios(relFiltrados, "mensal", dataInicio, dataFim);
+        //             break;
+
+        //         case "4": // Anual
+        //             dataInicio = new DateTime(hoje.Year, 1, 1);
+        //             dataFim = new DateTime(hoje.Year, 12, 31);
+        //             relFiltrados = relatorios.Where(r => r.Data.Date >= dataInicio && r.Data.Date <= dataFim).ToList();
+        //             repo.ExportarRelatorios(relFiltrados, "anual", dataInicio, dataFim);
+        //             break;
+                    
+        //         default:
+        //             Console.WriteLine("Opção inválida.");
+        //             Console.ReadKey();
+        //             return;
+        //     }
+
+        //     var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
+
+        //     Console.Clear();
+        //     Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");
+
+        //     foreach (var rel in relatorios)
+        //     {
+        //         Console.WriteLine($"{rel.Tipo} | {rel.NomeItem} | {rel.Quantidade} un. | R$ {rel.ValorTotal:F2} | {rel.Data:dd/MM/yyyy}");
+        //     }
+
+        //     if (!relatorios.Any())
+        //     {
+        //         Console.WriteLine("Nenhum relatório encontrado para o período.");
+        //     }
+
+        //     Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        //     Console.ReadKey();
+        // }
         public void RealizarVenda()
         {
             Console.Clear();
