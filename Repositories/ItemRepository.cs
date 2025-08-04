@@ -8,9 +8,9 @@ namespace TasTock.Repositories
     {
         private readonly AppDbContext _context;
 
-        public ItemRepository()
+        public ItemRepository(AppDbContext context)
         {
-            _context = new AppDbContext();
+            _context = context;
             _context.Database.EnsureCreated(); // Cria o banco se não existir
         }
 

@@ -1,5 +1,6 @@
 using TasTock.Models;
 using TasTock.Repositories;
+using System.Globalization;
 
 namespace TasTock.Services
 {
@@ -7,9 +8,9 @@ namespace TasTock.Services
     {
         private readonly ItemRepository _repo;
 
-        public ItemService()
+        public ItemService(ItemRepository repo)
         {
-            _repo = new ItemRepository();
+            _repo = repo;
         }
 
         public void Cadastrar()
@@ -21,7 +22,13 @@ namespace TasTock.Services
             string? nome = Console.ReadLine();
 
             Console.Write("Quantidade: ");
-            int.TryParse(Console.ReadLine(), out int qtd);
+            //int.TryParse(Console.ReadLine(), out int qtd);
+            int qtd;
+            do
+            {
+                Console.Write("Quantidade: ");
+            } while (!int.TryParse(Console.ReadLine(), out qtd));
+
 
             Console.Write("Preço unitário: ");
             decimal.TryParse(Console.ReadLine(), out decimal preco);
@@ -94,11 +101,12 @@ namespace TasTock.Services
                 decimal total = itens.Sum(i => i.PrecoUnitario * i.Quantidade);
                 Console.WriteLine($"\n Itens cadastrados: {itens.Count} \n");
                 foreach (var item in itens)
-                    {
-                        Console.WriteLine($" ID: {item.Id} | {item.Nome} | R$ {item.PrecoUnitario:F2} | {item.Quantidade} un.");
-                    }
-                Console.WriteLine("\n Total acumulado (valor x quantidade):\n");
-                Console.WriteLine( $"R$ {total:F2}");
+                {
+                    Console.WriteLine($" ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
+                }
+                Console.WriteLine($"\n Total acumulado (valor x quantidade):\n");
+                Console.WriteLine($"{total.ToString("C", new CultureInfo("pt-BR"))}");
+                Console.WriteLine( $"{total:F2}");
             }
             Console.ReadKey();
         }
@@ -158,7 +166,7 @@ namespace TasTock.Services
                         Console.WriteLine("\n--- RESULTADO ---\n");
                         foreach (var item in resultado)
                         {
-                            Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario:F2} | {item.CadastradoEm:dd/MM/yyyy}");
+                            Console.WriteLine($"ID: {item.Id} | {item.Nome} | {item.Quantidade} un. | R$ {item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))} | {item.CadastradoEm:dd/MM/yyyy}");
                         }
 
                         Console.WriteLine("\nPressione qualquer tecla para voltar ao menu de listagem...");
