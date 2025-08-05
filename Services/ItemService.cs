@@ -395,7 +395,5 @@ namespace TasTock.Services
             Console.WriteLine("\nPressione qualquer tecla para continuar...");
             Console.ReadKey();
         }
-
-
     }
 }

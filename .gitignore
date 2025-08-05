@@ -1,9 +1,0 @@
-//Igorar arquivos de banco de dados comuns
-
-*.db
-*.sqlite
-*.sqlite3
-*.db3
-*.sql
-*.db-shm
-*.db-wal
