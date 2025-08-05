@@ -1,13 +1,8 @@
 # TasTock
 
-**TasTock** é um aplicativo de console desenvolvido em C# com .NET 9. Ele integra funcionalidades de gerenciamento de tarefas, controle de estoque e recursos de integração com e-mail e APIs externas. O projeto é ideal para fins de estudo, prototipagem e desenvolvimento de soluções empresariais modulares em ambiente local.
+**TasTock** é um aplicativo de console desenvolvido em C# com .NET 9. Ele integra funcionalidades de gerenciamento de tarefas, controle de estoque e recursos de integração com e-mail e APIs externas. O projeto foi criado para fins de estudo, prototipagem e desenvolvimento de soluções empresariais modulares em ambiente local.
 
 ## Funcionalidades
-
-* Gerenciamento de Tarefas
-
-  * Criar, listar, editar e excluir tarefas
-  * Acompanhamento de status (pendente, em andamento, concluída)
 
 * Controle de Estoque
 
@@ -84,4 +79,4 @@ Este projeto está licenciado sob os termos da Licença MIT. Consulte o arquivo 
 
 Desenvolvido por [Gilyan Ceos]
 E-mail: gilyan.dev@outlook.com
-LinkedIn: https://www.linkedin.com/in/gilyan-ceos/
+LinkedIn: https://www.linkedin.com/in/gilyan-santos/
