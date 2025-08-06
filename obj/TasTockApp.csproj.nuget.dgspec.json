@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/gilyan/Dev.Projetos/TasTock/TasTockApp.csproj": {}
+    "/home/gilyan/Dev.Projetos/TasTock-Console/TasTockApp.csproj": {}
   },
   "projects": {
-    "/home/gilyan/Dev.Projetos/TasTock/TasTockApp.csproj": {
+    "/home/gilyan/Dev.Projetos/TasTock-Console/TasTockApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gilyan/Dev.Projetos/TasTock/TasTockApp.csproj",
+        "projectUniqueName": "/home/gilyan/Dev.Projetos/TasTock-Console/TasTockApp.csproj",
         "projectName": "TasTockApp",
-        "projectPath": "/home/gilyan/Dev.Projetos/TasTock/TasTockApp.csproj",
+        "projectPath": "/home/gilyan/Dev.Projetos/TasTock-Console/TasTockApp.csproj",
         "packagesPath": "/home/gilyan/.nuget/packages/",
-        "outputPath": "/home/gilyan/Dev.Projetos/TasTock/obj/",
+        "outputPath": "/home/gilyan/Dev.Projetos/TasTock-Console/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/gilyan/.nuget/NuGet/NuGet.Config"
@@ -20,6 +20,7 @@
           "net9.0"
         ],
         "sources": {
+          "/usr/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

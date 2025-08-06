@@ -18,37 +18,118 @@ namespace TasTock.Services
             Console.Clear();
             Console.WriteLine("CADASTRAR NOVO ITEM");
 
-            Console.Write("Nome do item: ");
-            string? nome = Console.ReadLine();
-
-            Console.Write("Quantidade: ");
-            int qtd;
+            string? nome;
             do
             {
+                Console.Write("Nome do item: ");
+                nome = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(nome))
+                    Console.WriteLine("Nome não pode ser vazio");
+            } while (string.IsNullOrWhiteSpace(nome)) ;
+
+            int qtd;
+            while (true)
+            {
                 Console.Write("Quantidade: ");
-            } while (!int.TryParse(Console.ReadLine(), out qtd));
+                if (int.TryParse(Console.ReadLine(), out qtd) && qtd >= 0)
+                break;
+                Console.WriteLine("Quantidade inválida. Digite um número válido.");
+            }
 
-
-            Console.Write("Preço unitário: ");
-            decimal.TryParse(Console.ReadLine(), out decimal preco);
+            decimal preco;
+            while (true)
+            {
+                Console.Write("Preço unitário: ");
+                if (decimal.TryParse(Console.ReadLine(), out preco) && preco >= 0)
+                break;
+                Console.WriteLine("Preço inválido. Digite valor válido.");
+            }
 
             var item = new Item
             {
-                Nome = nome ?? "",
+                Nome = nome,
                 Quantidade = qtd,
                 PrecoUnitario = preco
             };
 
+            
             _repo.Adicionar(item);
             Console.WriteLine("Item cadastrado com sucesso.");
             Console.ReadKey();
         }
 
-        public void Editar()
+        public void Editar(AppDbContext db)
         {
             Console.Clear();
-            Listar();
-            Console.Write("\nInforme o ID do item a editar: ");
+            Console.WriteLine("EDITAR ITEM");
+
+            var itens = db.Itens.ToList();
+
+            if (itens.Count == 0)
+            {
+                Console.WriteLine("Nenhum item cadastrado");
+                Console.ReadKey();
+                return;
+            }
+
+            foreach (var Item in itens)
+            {
+                Console.WriteLine($"ID: {Item.Id} | {Item.Nome} | {Item.Quantidade} un. | {Item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
+            }
+
+            if (!itens.Any())
+            {
+                Console.WriteLine("Nenhum item cadastrado.");
+            }
+            else
+            {
+                Console.Write("\nInforme o ID do item a editar: ");
+                int.TryParse(Console.ReadLine(), out int id);
+
+                var item = _repo.BuscarPorId(id);
+                if (item == null)
+                {
+                    Console.WriteLine("Item não encontrado.");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Console.Write($"Novo nome ({item.Nome}): ");
+                var nome = Console.ReadLine();
+                item.Nome = string.IsNullOrWhiteSpace(nome) ? item.Nome : nome;
+
+                Console.Write($"Nova quantidade ({item.Quantidade}): ");
+                if (int.TryParse(Console.ReadLine(), out int qtd)) item.Quantidade = qtd;
+
+                Console.Write($"Novo preço unitário ({item.PrecoUnitario}): ");
+                if (decimal.TryParse(Console.ReadLine(), out decimal preco)) item.PrecoUnitario = preco;
+
+                _repo.Atualizar(item);
+                Console.WriteLine("Item atualizado.");
+                Console.ReadKey();
+            }
+        }
+
+        public void Remover(AppDbContext db)
+        {
+            Console.Clear();
+            Console.WriteLine("REMOVER ITEM");
+
+            var itens = db.Itens.ToList();
+
+            if (itens.Count == 0)
+            {
+                Console.WriteLine("Nenhum item cadastrado");
+                Console.ReadKey();
+                return;
+            }
+
+            foreach (var Item in itens)
+            {
+                Console.WriteLine($"ID: {Item.Id} | {Item.Nome} | {Item.Quantidade} un. | {Item.PrecoUnitario.ToString("C", new CultureInfo("pt-BR"))}");
+            }
+
+            Console.Write("\nInforme o ID do item a remover: ");
             int.TryParse(Console.ReadLine(), out int id);
 
             var item = _repo.BuscarPorId(id);
@@ -58,28 +139,6 @@ namespace TasTock.Services
                 Console.ReadKey();
                 return;
             }
-
-            Console.Write($"Novo nome ({item.Nome}): ");
-            var nome = Console.ReadLine();
-            item.Nome = string.IsNullOrWhiteSpace(nome) ? item.Nome : nome;
-
-            Console.Write($"Nova quantidade ({item.Quantidade}): ");
-            if (int.TryParse(Console.ReadLine(), out int qtd)) item.Quantidade = qtd;
-
-            Console.Write($"Novo preço unitário ({item.PrecoUnitario}): ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal preco)) item.PrecoUnitario = preco;
-
-            _repo.Atualizar(item);
-            Console.WriteLine("Item atualizado.");
-            Console.ReadKey();
-        }
-
-        public void Remover()
-        {
-            Console.Clear();
-            Listar();
-            Console.Write("\nInforme o ID do item a remover: ");
-            int.TryParse(Console.ReadLine(), out int id);
 
             _repo.Remover(id);
             Console.WriteLine("Item removido.");
@@ -284,8 +343,6 @@ namespace TasTock.Services
             }
 
             var relatorios = repoRelatorio.ListarPorPeriodo(inicio, fim);
-
-            //repoRelatorio.ExportarRelatorios(relatorios, opcao, inicio, fim);
 
             Console.Clear();
             Console.WriteLine($"RELATÓRIOS DE {inicio:dd/MM/yyyy} A {fim.AddDays(-1):dd/MM/yyyy} \n");

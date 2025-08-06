@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7yJ9LXCXSyc=",
+  "dgSpecHash": "0DLVvJ/bpBs=",
   "success": true,
-  "projectFilePath": "/home/gilyan/Dev.Projetos/TasTock/TasTockApp.csproj",
+  "projectFilePath": "/home/gilyan/Dev.Projetos/TasTock-Console/TasTockApp.csproj",
   "expectedPackageFiles": [
     "/home/gilyan/.nuget/packages/microsoft.data.sqlite.core/9.0.0-preview.3.24172.4/microsoft.data.sqlite.core.9.0.0-preview.3.24172.4.nupkg.sha512",
     "/home/gilyan/.nuget/packages/microsoft.entityframeworkcore/9.0.0-preview.3.24172.4/microsoft.entityframeworkcore.9.0.0-preview.3.24172.4.nupkg.sha512",
