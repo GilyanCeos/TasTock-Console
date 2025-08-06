@@ -105,10 +105,6 @@ O banco de dados SQLite é criado automaticamente na pasta do programa no moment
 
 ## Licença
 
-- Este projeto está licenciado sob os termos da Licença MIT. 
-
-## Licença
-
 Este projeto está licenciado sob a [Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR). Consulte o arquivo [LICENSE](./LICENSE) para mais informações.
 
 
@@ -123,4 +119,5 @@ Este projeto está licenciado sob a [Creative Commons Attribution-NonCommercial 
 ---
 
 Obrigado por acessar o TasTock!
+
 Fique à vontade para contribuir, sugerir melhorias ou usar o projeto para aprendizado.
